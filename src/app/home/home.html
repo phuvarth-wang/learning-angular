@@ -1,8 +1,41 @@
-<h2>Counter Example</h2>
-<p>Count {{ count() }}</p>
-<p>Double {{ double() }}</p>
-<button (click) = "increase()">+1</button>
-<p></p>
-<button (click) = "decrease()">-1</button>
-<p></p>
-<button (click)="onDouble()">x2</button>
+<section class="counter">
+  <h2>Counter (Signal)</h2>
+  <p>Count = {{ count() }}</p>
+  <p>Double = {{ double() }}</p>
+
+  <button (click) = "increase()">+1</button>
+  <button (click) = "decrease()">-1</button>
+</section>
+
+<hr/>
+
+<section class="item-input">
+  <h2>Add item</h2>
+  <input 
+    placeholder="Enter item name"
+    [value]="newItemName()"
+    (input)="setNewItemName($any($event.target).value)"
+    (keyup.enter)="addItem()"
+  />
+
+  <button (click)="addItem()">Add</button>
+</section>
+
+<section class="items-list">
+  @if (items().length > 0){
+    <p>We have {{ items().length }} item(s).</p>
+  }
+
+  @for (item of items(); track item.id) {
+    <div class="item">
+      <span>Item ID: {{ item.id }}</span>
+      <span>Item name: {{ item.name }}</span>
+      <button (click)="removeItem(item.id)">Remove</button>
+    </div>
+  } @empty {
+    <p class="muted">No item to show</p>
+  }
+
+  <button (click) = "removeAllItem()">clear items</button>
+
+</section>
